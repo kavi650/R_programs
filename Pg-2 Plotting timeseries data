@@ -1,0 +1,14 @@
+sales <- c(180, 135, 128, 145, 160, 170, 175, 180, 192, 185, 195, 210)
+
+sales.ts <- ts(sales, start = c(2025, 1), frequency = 12)
+
+sales.ts
+
+plot(sales.ts,
+     main = "Monthly Sale of Retail Store",
+     xlab = "Month",
+     ylab = "Sales (₹ thousand)")
+
+points(sales.ts, pch = 19)
+
+grid()
