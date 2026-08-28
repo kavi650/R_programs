@@ -1,0 +1,25 @@
+# Program 10: Forecasting using an ARIMA Model in R
+
+sales <- c(120, 125, 132, 140, 151, 160, 172, 185, 197, 210)
+
+sales.ts <- ts(sales, start = 2015, frequency = 1)
+
+plot(sales.ts,
+     type = "o",
+     col = "blue",
+     main = "Annual Sales",
+     xlab = "Time",
+     ylab = "Sales")
+
+library(forecast)
+
+fit <- Arima(sales.ts, order = c(0, 1, 1))
+
+summary(fit)
+
+future <- forecast(fit, h = 5)
+
+future
+
+plot(future,
+     main = "5-Year Forecast using ARIMA")
