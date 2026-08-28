@@ -1,0 +1,56 @@
+# Program 1: Time Series Data Cleaning, Loading and Handling
+
+# Create example data
+data <- data.frame(
+  x1 = c(1, 2, 3, 4, 99999, 1, NA, 1, 1, NA),
+  x2 = c(1, 2, 3, 4, 5, 1, NA, 1, 1, NA),
+  x3 = c("a", "b", "c", "xx", "xx", "yyy", "x", "a", "a", NA),
+  x4 = c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+  x5 = NA
+)
+
+data
+
+# Modify column names
+colnames(data) <- c("col1", "col2", "col3", "col4", "col5")
+data
+
+# Replace empty strings with NA
+data[data == ""] <- NA
+data
+
+# Remove empty rows and columns
+data <- data[rowSums(is.na(data)) != ncol(data), ]
+data <- data[, colSums(is.na(data)) != nrow(data)]
+data
+
+# Remove rows with missing values
+data <- na.omit(data)
+data
+
+# Remove duplicates
+data <- unique(data)
+data
+
+# Modify class of columns
+data <- type.convert(data, as.is = TRUE)
+data
+sapply(data, class)
+
+# Detect and remove outliers
+out <- boxplot.stats(data$col1)$out
+out
+
+data <- data[!data$col1 %in% out, ]
+data
+
+# Remove spaces in character strings
+data$col3 <- gsub(" ", "", data$col3)
+data
+
+# Combine categories
+data$col3[data$col3 %in% c("b", "c")] <- "a"
+data
+
+# Final output
+print(data)
