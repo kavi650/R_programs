@@ -1,0 +1,37 @@
+# Program 7: Time Series Linear and Non-Linear Trend Analysis
+
+year <- 2015:2023
+sales <- c(120, 128, 135, 142, 150, 158, 165, 172, 180)
+
+data <- data.frame(year, sales)
+
+linear.model <- lm(sales ~ year, data = data)
+
+summary(linear.model)
+
+pred <- predict(linear.model)
+
+plot(year, sales,
+     col = "blue",
+     type = "o",
+     main = "Linear Trend",
+     xlab = "Year",
+     ylab = "Sales")
+
+abline(linear.model, col = "red")
+
+quad.model <- lm(sales ~ year + I(year^2), data = data)
+
+summary(quad.model)
+
+pred <- predict(quad.model)
+
+lines(year, pred, col = "green")
+
+exp.model <- lm(log(sales) ~ year, data = data)
+
+summary(exp.model)
+
+pred <- exp(predict(exp.model))
+
+lines(year, pred, col = "red")
