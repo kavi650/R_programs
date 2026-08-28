@@ -1,0 +1,54 @@
+# Program 4: Seasonal Time Series Decomposition
+
+sales <- c(
+  120, 130, 150, 180, 210, 250, 270, 260, 220, 190, 160, 140,
+  130, 140, 165, 195, 225, 265, 285, 275, 235, 205, 175, 150
+)
+
+sales.ts <- ts(sales, start = c(2023, 1), frequency = 12)
+
+sales.ts
+
+plot(sales.ts,
+     type = "o",
+     pch = 16,
+     main = "Monthly Retail Sales",
+     xlab = "Year",
+     ylab = "Sales (₹ thousand)")
+
+grid()
+
+sales.decomp <- decompose(sales.ts, type = "additive")
+
+sales.decomp
+
+sales.decomp$trend
+
+sales.decomp$seasonal
+
+sales.decomp$random
+
+sales.decomp$figure
+
+plot(sales.decomp)
+
+unique(sales.decomp$seasonal)
+
+plot(sales.decomp$seasonal,
+     type = "o",
+     col = "red",
+     lwd = 2,
+     pch = 16,
+     main = "Seasonal Component",
+     xlab = "Month",
+     ylab = "Seasonal Effect")
+
+grid()
+
+plot(sales.decomp$random,
+     type = "o",
+     main = "Random Component",
+     xlab = "Year",
+     ylab = "Random Effect")
+
+grid()
