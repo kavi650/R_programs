@@ -1,0 +1,33 @@
+# Program 6: Smoothing Time Series Data in R
+
+# Sample data
+sales <- c(120, 125, 130, 128, 135, 140, 145, 150, 148, 155, 160, 165)
+
+# Convert sales data into time series
+sales.ts <- ts(sales, frequency = 12)
+
+# Simple exponential smoothing
+fit <- HoltWinters(sales.ts, beta = FALSE, gamma = FALSE)
+
+# Plot simple exponential smoothing
+plot(fit, main = "Simple Exponential Smoothing")
+
+# 3-point moving average
+trend <- filter(sales.ts, filter = rep(1/3, 3), sides = 2)
+
+# Running median smoothing
+smooth <- runmed(sales, k = 3)
+
+# Plot original data and running median
+plot(sales.ts,
+     type = "o",
+     col = "blue",
+     main = "Running Median Smoothing")
+
+lines(smooth,
+      col = "red")
+
+# Display smoothed values
+fit
+trend
+smooth
